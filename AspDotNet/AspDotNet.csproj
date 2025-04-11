@@ -11,10 +11,12 @@
   <ItemGroup>
     <None Remove="Services\" />
     <None Remove="Views\Email\" />
+    <None Remove="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Views\Email\" />
+    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MailKit" Version="4.11.0" />

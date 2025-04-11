@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Auto Location Form";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Fill Your Details</h2>
+
+    <form method="post" asp-controller="Home" asp-action="SubmitForm">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" name="name" class="form-control" id="name" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control" id="email" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="city" class="form-label">City:</label>
+            <input type="text" name="city" class="form-control" id="city" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="state" class="form-label">State:</label>
+            <input type="text" name="state" class="form-control" id="state" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="country" class="form-label">Country:</label>
+            <input type="text" name="country" class="form-control" id="country" readonly />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>window.onload = function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error, {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+
+        function success(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+
+            // Restrcited to use in prodution grade applications
+
+            const freeByOpenStreetMap = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+
+            // Restricted to 5000 requests per day as of free plan
+            // https://my.locationiq.com
+
+            const apiKeyForLocationIq = 'pk.4ee88485244178dff4052ed00b1bd5b5';
+            const paidByLocationIq = `https://us1.locationiq.com/v1/reverse?key=${apiKeyForLocationIq}&lat=${lat}&lon=${lon}&format=json`;
+
+            fetch(freeByOpenStreetMap)
+                .then(response => response.json())
+                .then(data => {
+                    const address = data.address;
+
+                    const city = address.city || address.town || address.village || address.hamlet || address.county || "";
+                    const state = address.state || "";
+                    const country = address.country || "";
+
+                    document.getElementById("city").value = city;
+                    document.getElementById("state").value = state;
+                    document.getElementById("country").value = country;
+                })
+                .catch(err => {
+                    console.error("Error during reverse geocoding:", err);
+                    alert("Failed to get location info. Please enter manually.");
+                });
+        }
+
+        function error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+            alert("Location access denied or failed. Please allow location access to autofill.");
+        }
+    };</script>
