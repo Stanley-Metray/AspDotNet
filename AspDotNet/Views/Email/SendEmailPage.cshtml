@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Send Email";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary mb-4">Compose New Email</h2>
+    <form class="bg-white p-4 shadow-sm rounded border">
+        <div class="mb-3">
+            <label class="form-label">To</label>
+            <input type="email" class="form-control" name="to" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-control" name="subject" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Body</label>
+            <textarea class="form-control" name="body" rows="6" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>document.querySelector('form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form); // This will handle multipart/form-data automatically
+
+            try {
+                const response = await axios.post('/email/send', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                alert('✅ ' + response.data.message);
+                form.reset();
+            } catch (err) {
+                console.error(err);
+                const msg = err.response?.data?.message || 'Something went wrong!';
+                alert('❌ ' + msg);
+            }
+        });</script>
+}
+
