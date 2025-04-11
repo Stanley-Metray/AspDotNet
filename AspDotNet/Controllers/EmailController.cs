@@ -3,6 +3,7 @@ using AspDotNet.Services;
 using Microsoft.AspNetCore.Mvc;
 using AspDotNet.Models;
 
+
 namespace AspDotNet.Controllers
 {
     [Route("email")]
@@ -16,7 +17,7 @@ namespace AspDotNet.Controllers
         }
 
         [HttpGet("inbox")]
-        public async Task<IActionResult> Inbox()
+        public async Task<IActionResult> InboxPage()
         {
             var emails = await _emailService.FetchRecentEmailsAsync();
             var result = emails.Select(e => new EmailModel
@@ -45,6 +46,27 @@ namespace AspDotNet.Controllers
                 body = latest.TextBody ?? latest.HtmlBody,
                 date = latest.Date.LocalDateTime.ToString()
             });
+        }
+
+
+        [HttpGet("send")]
+        public IActionResult SendEmailPage()
+        {
+            return View();
+        }
+
+        [HttpPost("send")]
+        public async Task<IActionResult> SendEmail([FromForm] string to, [FromForm] string subject, [FromForm] string body)
+        {
+            try
+            {
+                await _emailService.SendEmailAsync(to, subject, body);
+                return Ok(new { success = true, message = "Email sent successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
         }
     }
 
