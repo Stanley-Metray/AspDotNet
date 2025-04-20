@@ -1,0 +1,30 @@
+﻿@model List<NestedUserModel>;
+
+
+<h1>Users</h1>
+
+<div class="container my-2 shadow shadow-1 border border-1">
+    <table class="table table-dark table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Address.Street, @user.Address.City, @user.Address.Geo.Lat - @user.Address.Geo.Lon</td>
+                    <td>@user.Company.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

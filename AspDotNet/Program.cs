@@ -1,6 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using AspDotNet.Services;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<HttpClient>();
+builder.Services.AddSingleton<UserService>();
+
+// Neccessary for handling cache in Asp.net
+builder.Services.AddMemoryCache();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
