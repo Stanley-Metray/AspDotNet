@@ -7,6 +7,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<ImageService>();
 
 // Neccessary for handling cache in Asp.net
 builder.Services.AddMemoryCache();
