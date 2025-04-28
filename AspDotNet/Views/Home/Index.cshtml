@@ -5,24 +5,30 @@
 <div class="container my-5">
 
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Welcome</h1>
-        <p class="lead">Learn about <a href="https://learn.microsoft.com/aspnet/core" class="text-decoration-none">building Web apps with ASP.NET Core</a>.</p>
+        <h1 class="display-4 fw-bold text-primary">Welcome</h1>
+        <p class="lead">
+            Learn about
+            <a href="https://learn.microsoft.com/aspnet/core" class="text-decoration-none text-info" target="_blank">
+                building Web apps with ASP.NET Core
+            </a>.
+        </p>
     </div>
 
     <hr class="my-4" />
 
-    <h2 class="mb-4 text-center text-primary">I Developed Functionalities</h2>
+    <h2 class="mb-4 text-center text-success">I Developed Functionalities</h2>
 
     <div class="row g-4">
 
         <!-- Email Service -->
         <div class="col-md-6">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h3 class="card-title text-danger">Email Service</h3>
-                    <div class="d-flex gap-3 mt-3">
-                        <a href="/email/inbox" class="btn btn-primary w-100">Inbox</a>
-                        <a href="/email/send" class="btn btn-info w-100">New Email</a>
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-envelope-paper-fill text-danger fs-1"></i>
+                    <h3 class="card-title mt-3">Email Service</h3>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="/email/inbox" class="btn btn-outline-primary w-100">Inbox</a>
+                        <a href="/email/send" class="btn btn-outline-info w-100">New Email</a>
                     </div>
                 </div>
             </div>
@@ -30,11 +36,12 @@
 
         <!-- Access Location -->
         <div class="col-md-6">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h3 class="card-title text-danger">Access Location</h3>
-                    <div class="d-flex gap-3 mt-3">
-                        <a href="/location" class="btn btn-primary w-100">Open Form</a>
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-geo-alt-fill text-danger fs-1"></i>
+                    <h3 class="card-title mt-3">Access Location</h3>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="/location" class="btn btn-outline-primary w-100">Open Form</a>
                     </div>
                 </div>
             </div>
@@ -42,11 +49,12 @@
 
         <!-- Nested User Model -->
         <div class="col-md-6">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h3 class="card-title text-danger">Nested User Model Example</h3>
-                    <div class="d-flex gap-3 mt-3">
-                        <a href="/User/Index" class="btn btn-primary w-100">Show Users</a>
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-people-fill text-danger fs-1"></i>
+                    <h3 class="card-title mt-3">Nested User Model</h3>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="/User/Index" class="btn btn-outline-primary w-100">Show Users</a>
                     </div>
                 </div>
             </div>
@@ -54,36 +62,47 @@
 
         <!-- Image Cache -->
         <div class="col-md-6">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h3 class="card-title text-danger">Image Cache</h3>
-                    <div class="d-flex flex-column gap-3 mt-3">
-                        <a href="/Image/CacheImageUrl" class="btn btn-primary w-100">Cached Image URL</a>
-                        <a href="/Image/CacheImage" class="btn btn-primary w-100">Cached Image</a>
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-images text-danger fs-1"></i>
+                    <h3 class="card-title mt-3">Image Cache</h3>
+                    <div class="d-flex flex-column gap-3 mt-4">
+                        <a href="/Image/CacheImageUrl" class="btn btn-outline-primary w-100">Cached Image URL</a>
+                        <a href="/Image/CacheImage" class="btn btn-outline-primary w-100">Cached Image</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- OAuth -->
+        <!-- OAuth - Google / Microsoft Login -->
         <div class="col-12">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h3 class="card-title text-danger">OAuth - User Details</h3>
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-person-circle text-danger fs-1"></i>
+                    <h3 class="card-title mt-3">OAuth - User Details</h3>
 
                     @if (ViewBag.Name != null && ViewBag.Name != string.Empty)
                     {
                         <div class="mt-4">
                             <h2 class="h5 text-success">Welcome, @ViewBag.Name!</h2>
                             <p><strong>Email:</strong> @ViewBag.Email</p>
-                            <p><strong>Google ID:</strong> @ViewBag.GoogleId</p>
-                            <a href="/Account/Logout" class="btn btn-danger mt-3">Logout</a>
+                            <p><strong>User ID:</strong> @ViewBag.UserId</p>
+                            <a href="/Account/Logout" class="btn btn-danger mt-3">
+                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                            </a>
                         </div>
                     }
                     else
                     {
-                        <div class="mt-4">
-                            <a href="/Account/SignIn" class="btn btn-success">Login With Google</a>
+                        <div class="mt-4 d-flex flex-column flex-md-row gap-3 justify-content-center">
+                            <a href="/Account/SignInWithGoogle" class="btn btn-outline-danger d-flex align-items-center justify-content-center gap-2 w-100">
+                                <i class="bi bi-google"></i>
+                                Login with Google
+                            </a>
+                            <a href="/Account/SignInWithMicrosoft" class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 w-100">
+                                <i class="bi bi-microsoft"></i>
+                                Login with Microsoft
+                            </a>
                         </div>
                     }
                 </div>

@@ -1,9 +1,9 @@
-﻿namespace AspDotNet.Models;
-
-public class ErrorViewModel
+﻿namespace AspDotNet.Models
 {
-    public string? RequestId { get; set; }
-
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    public class ErrorViewModel
+    {
+        public string RequestId { get; set; }
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public string Message { get; set; }  // add this for custom message
+    }
 }
-

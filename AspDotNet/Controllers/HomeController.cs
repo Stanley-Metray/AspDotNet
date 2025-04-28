@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspDotNet.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace AspDotNet.Controllers;
 
@@ -23,14 +24,15 @@ public class HomeController : Controller
             var claims = claimsIdentity.Claims;
             string email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             string name = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            var googleId = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             ViewBag.Name = name;
             ViewBag.Email = email;
-            ViewBag.GoogleId = googleId;
+            ViewBag.UserId = userId;
         }
         return View();
     }
+
 
     public IActionResult Privacy()
     {
@@ -40,7 +42,20 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerFeature>();
+        if (exceptionDetails != null)
+        {
+            var exception = exceptionDetails.Error;
+            _logger.LogError(exception, "An error occurred.");
+            ViewBag.ErrorMessage = exception.Message;  // Send the error message to the view
+        }
+        return View();
     }
+
+    public IActionResult ThrowError()
+    {
+        throw new Exception("This is a test exception to check global error handling!");
+    }
+
 }
 
