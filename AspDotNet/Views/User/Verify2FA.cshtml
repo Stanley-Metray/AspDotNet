@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Verify 2FA";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="code">Enter 2FA Code:</label>
+        <input type="text" id="code" name="code" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Verify</button>
+</form>
+
+@if (ViewData.ModelState != null && ViewData.ModelState.Values.Any(v => v.Errors.Any()))
+{
+    <div class="alert alert-danger mt-3">
+        @ViewData.ModelState.Values.SelectMany(v => v.Errors).FirstOrDefault()?.ErrorMessage
+    </div>
+}
